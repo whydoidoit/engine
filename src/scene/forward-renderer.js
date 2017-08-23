@@ -1323,6 +1323,7 @@ pc.extend(pc, function () {
 
             // #ifdef PROFILER
             this._skinTime += pc.now() - skinTime;
+            // #endif
         },
 
         updateGpuSkinMatrices: function(drawCalls) {
