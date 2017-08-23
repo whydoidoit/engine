@@ -1308,9 +1308,13 @@ pc.extend(pc, function () {
             var skinTime = pc.now();
             // #endif
 
-            var i, skin;
+            var i, skin, drawCall;
             for (i = 0; i < drawCallsCount; i++) {
-                skin = drawCalls[i].skinInstance;
+                drawCall = drawCalls[i]
+                //Only update for visible mesh instances
+                if (drawCall instanceof pc.MeshInstance && drawCall.visible === false) continue;
+
+                skin = drawCall.skinInstance;
                 if (skin) {
                     skin.updateMatrices();
                     skin._dirty = true;
@@ -1319,7 +1323,6 @@ pc.extend(pc, function () {
 
             // #ifdef PROFILER
             this._skinTime += pc.now() - skinTime;
-            // #endif
         },
 
         updateGpuSkinMatrices: function(drawCalls) {
